@@ -13,7 +13,8 @@ typedef union data{
 typedef enum options{
 	ints=1,
 	dec,
-	chars
+	chars,
+	ext
 }opt;
 
 void mkmtrx(d &x ,int fil, int col,int opt);
@@ -21,53 +22,54 @@ void prnt_mtrx(d &mtx, int fil, int col, int opt);
 void restart();
 
 int main(){
-	int n_rows, n_cols;
-	opt opcion;
+	int n_rows, n_cols, opcion;
+	opt opts;
 	d mtx;
-	int reset;
+	
+	system("cls");
+	printf("Bienvenido al programa 2:\n");
+	printf("Ingresa el numero de columnas de la matriz:\n");
+	scanf("%d", &n_cols);
+	printf("Ingresa el numero de filas de la matriz:\n");
+	scanf("%d", &n_rows);
+	
+	if(n_cols == n_rows){
+		restart();
+	}
+	
 	do{
 		system("cls");
-		printf("Bienvenido al programa 2:\n");
-		printf("Ingresa el numero de columnas de la matriz:\n");
-		scanf("%d", &n_cols);
-		printf("Ingresa el numero de filas de la matriz:\n");
-		scanf("%d", &n_rows);
+		printf("Ingresa la opcion correspondiente [1-4]\n");
+		printf("1) Enteros\n");
+		printf("2) Decimales\n");
+		printf("3) Letras\n");
+		printf("4) Salir\n");
+		scanf("%d", &opcion);
+		system("cls");
 		
-		if(n_cols == n_rows){
-			printf("\n\nLas matriz debe ser nxm\n\n");
-			system("pause");	
-		}else{
-			printf("Ingresa la opcion correspondiente [1-4]\n");
-			printf("1) Enteros\n");
-			printf("2) Decimales\n");
-			printf("3) Letras\n");
-			printf("4) Salir\n");
-			scanf("%d", &opcion);
-			system("cls");
-			
-			switch(opcion){
-				case ints:
+		switch(opcion){
+			case ints:
 					mkmtrx(mtx ,n_rows, n_cols, ints);
 					prnt_mtrx(mtx ,n_rows, n_cols, ints);
-					break;
-					
-				case dec:
-					mkmtrx(mtx ,n_rows, n_cols, dec);
-					prnt_mtrx(mtx ,n_rows, n_cols, dec);
-					break;
+				break;
 				
-				case chars:
+			case dec:
+					mkmtrx(mtx ,n_rows, n_cols, dec);
+					prnt_mtrx(mtx ,n_rows, n_cols, dec);	
+				break;
+			
+			case chars:
 					mkmtrx(mtx ,n_rows, n_cols, chars);
 					prnt_mtrx(mtx ,n_rows, n_cols, chars);
-					break;
-				
-				default:
-					return 0;
-					break;
-			}
+				break;
+			
+			default:
+				return 0;
+				break;
 		}
+		
 	}
-	while(opcion < 4 || opcion > 0);
+	while(opcion!=ext);
 	
 	system("cls");
 	printf("Bueno bai");
@@ -78,6 +80,7 @@ int main(){
 void mkmtrx(d &mtx ,int fil, int col, int opt){
 	int i,j;
 	system("cls");
+	
 	switch(opt){
 		//INT CASE
 		case 1:
@@ -106,7 +109,7 @@ void mkmtrx(d &mtx ,int fil, int col, int opt){
 			break;
 			
 		//CHAR CASE
-		case 4:
+		case 3:
 			mtx.c[fil][col];
 			//Ingresar los datos a la matriz definida
 			
@@ -120,23 +123,21 @@ void mkmtrx(d &mtx ,int fil, int col, int opt){
 			
 		default:
 			printf("No tenemos esa opción. Lo sentimos :C");
-			restart();
-			break;
+			system("pause");
 	}
 	
 }
 
 void prnt_mtrx(d &mtx, int fil, int col, int opt){
+	system("cls");
 	char yn;
 	int i,j;
-	system("cls");
-	printf("\n\n %d\n\n", opt);
 	switch(opt){
 		//INT CASE
 		case 1:
 			printf(" _____________________________ \n");
 			printf("|                             |\n");
-			printf("|  La matriz de tamaño %dx%d    |\n", i, j);
+			printf("|  La matriz de tamaño %dx%d    |\n", fil, col);
 			printf("|                             |\n");
 			printf("|_____________________________|\n");
 			printf("\n\n");
@@ -147,13 +148,13 @@ void prnt_mtrx(d &mtx, int fil, int col, int opt){
 				}
 				printf("|  \n");
 			}
-			break;
-			
+		break;
+		
 		//FLOAT CASE
 		case 2:
 			printf(" _____________________________ \n");
 			printf("|                             |\n");
-			printf("|  La matriz de tamaño %dx%d    |\n", i, j);
+			printf("|  La matriz de tamaño %dx%d    |\n", fil, col);
 			printf("|                             |\n");
 			printf("|_____________________________|\n");
 			printf("\n\n");
@@ -164,13 +165,13 @@ void prnt_mtrx(d &mtx, int fil, int col, int opt){
 				}
 				printf("|  \n");
 			}
-			break;
+		break;
 			
 		//CHAR CASE
 		case 3:
 			printf(" _____________________________ \n");
 			printf("|                             |\n");
-			printf("|  La matriz de tamaño %dx%d    |\n", i, j);
+			printf("|  La matriz de tamaño %dx%d    |\n", fil, col);
 			printf("|                             |\n");
 			printf("|_____________________________|\n");
 			printf("\n\n");
@@ -181,23 +182,13 @@ void prnt_mtrx(d &mtx, int fil, int col, int opt){
 				}
 				printf("|  \n");
 			}
-			break;
+		break;
 			
 		default:
 			printf("No tenemos esa opción. Lo sentimos :C");
-			restart();
-			break;
 	}
-	
-	printf("\n\n¿Reiniciar?\n");
-	printf("[Y/N]\n");
-	scanf("%c", &yn);
-	
-	if(yn=='y'|| yn=='Y'){
-		restart();
-	}else{
-		return;
-	}
+	printf("\n\nPulsa cualquier tecla para continuar\n\n");
+	system("pause");
 }
 
 void restart(){
