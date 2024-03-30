@@ -53,7 +53,31 @@ int main(){
 
 //En funciones:
 
-void imp_mtx(){
+void get_mtx(int fil, int col, m &mtx){
+	m mtx;
+	
+	int fil, col, i, j, c; 
+	
+	//Metodos para leer y escribir una matriz con datos random
+	//1.- Pedir numero de filas y columnas
+	printf("Escribe el numero de filas\n");
+	scanf("%d", &fil);
+	printf("\nEscribe el numero de columnas\n");
+	scanf("%d", &col);
+	
+	mtx.e[fil][col];
+	//Ingresar los datos a la matriz definida
+	
+	for(i=0; i<fil; i++){
+		for(j=0; j<col; j++){
+			printf("Escribe el elemento %d de la fila %d:\n", j+1, i+1);
+			scanf("%d", &mtx.e[i][j]);
+		}
+	}
+}
+
+void imp_mtx(m &mtx, int tipo){
+	int i, j;
 	//Imprimiendo la pinche matriz
 	//Luego le damos formato chido xd
 	printf(" _____________________________ \n");
